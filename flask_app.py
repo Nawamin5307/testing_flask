@@ -56,7 +56,7 @@ app = Flask(__name__ , template_folder='www/')
 app.config['SECRET_KEY'] = 'secret_key'
 socketio = SocketIO(app)
 
-app.config['MQTT_BROKER_URL'] = '192.168.44.1'  
+app.config['MQTT_BROKER_URL'] = '192.168.50.214'  
 app.config['MQTT_BROKER_PORT'] = 1883  
 app.config['MQTT_USERNAME'] = ''  
 app.config['MQTT_PASSWORD'] = ''
@@ -72,9 +72,9 @@ mqtt = Mqtt(app)
 # app.config['MYSQL_PASSWORD'] = 'dew2533449'
 # app.config['MYSQL_DB'] = 'esp_data'
 
-def send_palate_to_web(np):
+def send_pallet_to_web(np):
     return {
-        "palate_v" : np
+        "pallet_v" : np
     }
 
 def send_point_to_web(dt):
@@ -84,7 +84,7 @@ def send_point_to_web(dt):
 
 def send_all_zero():
     return {
-        'palate_v' : 0 ,
+        'pallet_v' : 0 ,
         'point' : 0
     }
 
@@ -103,7 +103,7 @@ def collected_data(input_str):
     angle.append(clear_data(input_str)[1])
     distance.append(clear_data(input_str)[2])
 
-def cal_palate():
+def cal_pallet():
     result = 0
     i = 0
     for i in range(0 , len(distance)):
@@ -147,13 +147,13 @@ def handle_mqtt_message(client, userdata, message):
 
         elif message.topic == "next":
             global num_palate
-            num_palate = cal_palate()
-            print(str(show_palate(count)) + " : " + str(num_palate))
+            num_pallet = cal_pallet()
+            print(str(show_palate(count)) + " : " + str(num_pallet))
             distance.clear()
             angle.clear()
             count = count + 1 
 
-            socketio.emit('send_palate' , send_palate_to_web(num_palate) , namespace='/' )
+            socketio.emit('send_pallet' , send_pallet_to_web(num_pallet) , namespace='/' )
 
         elif message.topic == "reset":
             count = count - 1

@@ -46,7 +46,7 @@
       color: #333;
     }
 
-    #palate_v {
+    #pallet_v {
       font-size: 36px;;
       font-weight: bold;
       color: #FF5733;
@@ -89,7 +89,7 @@
     <h1>STOCK-CHECKING</h1>
     <div class="sensorDiv">
       <div class="valueDiv">
-        <p><span id="palate_v">Palate</span></p>
+        <p><span id="pallet_v">Pallet</span></p>
       </div>
     </div>
     <div class="pointGroupDiv">
@@ -120,12 +120,12 @@
     });
 
     //If received message from server
-    socket.on('send_palate', function(data) {
-      update_palate(data.palate_v);
+    socket.on('send_pallet', function(data) {
+      update_palate(data.pallet_v);
     });
 
-    function update_palate(palate_v) {
-      $('#palate_v').text(palate_v);
+    function update_palate(pallet_v) {
+      $('#pallet_v').text(pallet_v);
     }
 
     socket.on('send_point_1', function(data) {
@@ -169,11 +169,11 @@
     }
 
     socket.on('set_zero', function(data) {
-      updateSensorData(data.palate_v ,data.point);
+      updateSensorData(data.pallet_v ,data.point);
     });
 
-    function updateSensorData(palate_v , point) {
-      $('#palate_v').text(palate_v);
+    function updateSensorData(pallet_v , point) {
+      $('#pallet_v').text(pallet_v);
       $('#point_1').text(point + ' m.');
       $('#point_2').text(point + ' m.');
       $('#point_3').text(point + ' m.');
