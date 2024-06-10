@@ -47,9 +47,21 @@
     }
 
     #pallet_v {
+      font-size: 30px;;
+      font-weight: bold;
+      color: #00224D;
+    }
+
+    #c_row_v {
       font-size: 36px;;
       font-weight: bold;
       color: #FF5733;
+    }
+
+    #row_v {
+      font-size: 30px;;
+      font-weight: bold;
+      color: #00224D;
     }
 
     .pointGroupDiv {
@@ -89,7 +101,7 @@
     <h1>STOCK-CHECKING</h1>
     <div class="sensorDiv">
       <div class="valueDiv">
-        <p><span id="pallet_v">Pallet</span></p>
+        <p><span id="c_row_v">Current Row</span></p>
       </div>
     </div>
     <div class="pointGroupDiv">
@@ -98,6 +110,14 @@
       <div class="point" id="point_3"><span>Point 3<span></div>
       <div class="point" id="point_4"><span>Point 4<span></div>
       <div class="point" id="point_5"><span>Point 5<span></div>
+    </div>
+    <div class="sensorDiv">
+      <div class="valueDiv">
+        <p><span id="row_v">Row</span></p>
+      </div>
+      <div class="valueDiv">
+        <p><span id="pallet_v">Pallet</span></p>
+      </div>
     </div>
     <p id="state" class="state">State: wait for connection...</p>
   </div>
@@ -179,6 +199,34 @@
       $('#point_3').text(point + ' m.');
       $('#point_4').text(point + ' m.');
       $('#point_5').text(point + ' m.');
+    }
+
+    socket.on('send_c_row', function(data) {
+      update_crow(data.c_row_v);
+    });
+
+    function update_crow(row) {
+      $('#c_row_v').text(row);
+    }
+
+    socket.on('set_point_zero', function(data) {
+      point_all_zero(data.point);
+    });
+
+    function point_all_zero(point) {
+      $('#point_1').text(point + ' m.');
+      $('#point_2').text(point + ' m.');
+      $('#point_3').text(point + ' m.');
+      $('#point_4').text(point + ' m.');
+      $('#point_5').text(point + ' m.');
+    }
+
+    socket.on('send_row', function(data) {
+      update_row(data.row_v);
+    });
+
+    function update_row(row) {
+      $('#row_v').text(row);
     }
 
   </script>
